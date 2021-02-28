@@ -1,0 +1,42 @@
+FROM ubuntu:18.04 as dl
+ARG VERSION
+ARG CHECKSUM=12f8e5c322d3b42104cb234f92f9ae9e9c228adbd8bfc8d2c52dd2bbbdb99f94
+ARG FILENAME="${VERSION}.tar.gz"
+WORKDIR /tmp
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN \
+  echo "**** install packages ****" && \
+  apt-get update && \
+  apt-get install -y --no-install-recommends \
+    wget &&\
+  echo "**** download app ****" && \
+  mkdir /app && \
+  wget "https://github.com/huginn/huginn/archive/${FILENAME}" && \
+  echo "${CHECKSUM}  ${FILENAME}" | sha256sum -c && \
+  tar -xvf "${FILENAME}" --strip-components 1 -C /app
+WORKDIR /app
+
+FROM ghcr.io/linuxserver/baseimage-ubuntu:bionic
+ARG BUILD_DATE
+ARG VERSION
+LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="nicholaswilde"
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN \
+  echo "**** install packages ****" && \
+  apt-get update && \
+  apt-get install -y --no-install-recommends \
+	  && \
+  echo "**** cleanup ****" && \
+  apt-get clean && \
+  rm -rf \
+    /tmp/* \
+	  /var/lib/apt/lists/ \
+	  /var/tmp/*
+	  
+# copy local files
+COPY root/ /
+
+# ports and volumes
+EXPOSE 3000
+VOLUME /config

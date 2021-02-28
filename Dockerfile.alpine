@@ -1,0 +1,35 @@
+FROM alpine:3.13.1 as dl
+ARG VERSION
+ARG CHECKSUM
+WORKDIR /tmp
+ARG FILENAME="${VERSION}.tar.gz"
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+RUN \
+  echo "**** install packages ****" && \
+  apk add --no-cache \
+    wget=1.21.1-r1 && \
+  echo "**** download haste ****" && \
+  mkdir /app && \
+  wget "https://github.com/zneix/haste-server/archive/${FILENAME}" && \
+  echo "${CHECKSUM}  ${FILENAME}" | sha256sum -c && \
+  tar -xvf "${FILENAME}" -C /app --strip-components 1
+WORKDIR /app
+
+FROM ghcr.io/linuxserver/baseimage-alpine:3.13
+ARG BUILD_DATE
+ARG VERSION
+LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="nicholaswilde"
+RUN \
+  echo "**** install packages ****" && \
+  apk add --no-cache \
+    && \
+  echo "**** cleanup ****" && \
+  rm -rf /tmp/*
+
+# copy local files
+COPY root/ /
+
+# ports and volumes
+EXPOSE 3000
+VOLUME /config
