@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+cd /go/bin || exit
+
+exec \
+	s6-setuidgid abc /go/bin/shiori \
+    serve

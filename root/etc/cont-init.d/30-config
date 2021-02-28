@@ -2,4 +2,5 @@
 
 # permissions
 chown -R abc:abc \
-	/config
+	/data \
+  /go
