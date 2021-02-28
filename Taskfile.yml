@@ -146,7 +146,7 @@ tasks:
   up:
     desc: Run docker-compose up
     cmds:
-      - docker-compose -f docker-compose.yaml up
+      - docker-compose -f docker-compose.sqlite3.yaml up
     deps:
       - build:latest
 

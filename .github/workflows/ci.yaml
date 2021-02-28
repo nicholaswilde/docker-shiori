@@ -19,7 +19,7 @@ on:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Version'
         # Default value if no value is explicitly provided
-        default: '0.1.0'
+        default: 'v1.5.0'
         # Input has to be provided for the workflow to run
         required: true
       ls:

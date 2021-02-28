@@ -1,0 +1,28 @@
+---
+version: "2.1"
+services:
+  shiori:
+    image: nicholaswilde/shiori:latest
+    container_name: shiori-default
+    environment:
+      TZ: America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      SHIORI_PG_HOST: ""
+      SHIORI_PG_PORT: ""
+      SHIORI_PG_USER: user
+      SHIORI_PG_PASS: example
+      SHIORI_PG_NAME: ""
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    volumes:
+      - data:/data
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: example
+volumes:
+  data:

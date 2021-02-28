@@ -1,0 +1,28 @@
+---
+version: "2.1"
+services:
+  shiori:
+    image: nicholaswilde/shiori:latest
+    container_name: shiori-default
+    environment:
+      TZ: America/Los_Angeles
+      PUID: 1000
+      PGID: 1000
+      SHIORI_MYSQL_USER: user
+      SHIORI_MYSQL_PASS: example
+      SHIORI_MYSQL_NAME: ""
+      SHIORI_MYSQL_ADDRESS: ""
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    volumes:
+      - data:/data
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_USER: user
+      MYSQL_ROOT_PASSWORD: example
+volumes:
+  data:

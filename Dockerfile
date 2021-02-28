@@ -28,7 +28,7 @@ ENV GOPATH /go
 ENV SHIORI_DIR /data
 LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="nicholaswilde"
-COPY --from=build --chown=abc:abc /go /go
+COPY --from=build --chown=abc:abc /go/bin /go/bin
 COPY root/ /
 RUN \
   mkdir /data && \
@@ -39,4 +39,3 @@ WORKDIR /data
 EXPOSE 8080/tcp
 VOLUME \
   /data
-#ENTRYPOINT ["/go/bin/shiori", "serve"]
