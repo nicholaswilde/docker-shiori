@@ -5,7 +5,7 @@ tasks:
   alpine:
     desc: Check package versions for alpine based images
     cmds:
-      - "{{ .RUN }} {{ .BASE }} /bin/sh -c 'apk policy {{ .PACKAGES }}'"
+      - "{{ .RUN }} {{ .BASE }} /bin/sh -c 'apk update && apk policy {{ .PACKAGES }}'"
 
   debian:
     desc: Check package versions for debian based images

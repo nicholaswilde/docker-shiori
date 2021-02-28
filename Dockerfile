@@ -8,7 +8,7 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 RUN \
   echo "**** install packages ****" && \
   apk add --no-cache \
-    wget \
+    wget=1.21.1-r1 \
     make=4.3-r0 \
     build-base=0.5-r2 && \
   echo "**** download static ****" && \
