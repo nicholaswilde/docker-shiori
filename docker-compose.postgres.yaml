@@ -18,6 +18,8 @@ services:
     restart: unless-stopped
     volumes:
       - data:/data
+    depends_on:
+      - db
   db:
     image: postgres
     restart: always
