@@ -26,5 +26,8 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: example
+    volumes:
+      - postgres:/var/lib/postgresql/data
 volumes:
   data:
+  postgres:
