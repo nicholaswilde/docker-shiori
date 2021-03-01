@@ -27,7 +27,7 @@ services:
       MYSQL_USER: user
       MYSQL_ROOT_PASSWORD: example
     volumes:
-      mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql
 volumes:
   data:
   mysql:
