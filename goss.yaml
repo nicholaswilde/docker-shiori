@@ -1,0 +1,14 @@
+---
+port:
+  tcp6:8080:
+    listening: true
+
+process:
+  shiori:
+    running: true
+
+http:
+  http://localhost:8080/login?dst=%2F:
+    status: 200
+    body:
+      - <title>Login - Shiori</title>

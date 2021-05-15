@@ -1,6 +1,6 @@
 FROM golang:1.14.15-alpine3.13 as build
 ARG VERSION
-ARG CHECKSUM=c2ebc0f009feb22f891c7ab0fa7b8c0d71e1cfc34a974c7503a702ec07d8e9ee
+ARG CHECKSUM
 ARG FILENAME=${VERSION}.tar.gz
 ENV GO111MODULE on
 WORKDIR /tmp
@@ -13,7 +13,7 @@ RUN \
     build-base=0.5-r2 && \
   echo "**** download static ****" && \
   mkdir /app && \
-  wget "https://github.com/go-shiori/shiori/archive/${FILENAME}" && \
+  wget -q "https://github.com/go-shiori/shiori/archive/${FILENAME}" && \
   echo "${CHECKSUM}  ${FILENAME}" | sha256sum -c && \
   tar -xvf "${FILENAME}" -C /app --strip-components 1
 WORKDIR /app
@@ -26,6 +26,7 @@ ARG BUILD_DATE
 ARG VERSION
 ENV GOPATH /go
 ENV SHIORI_DIR /data
+# hadolint ignore=DL3048
 LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="nicholaswilde"
 COPY --from=build --chown=abc:abc /go/bin /go/bin
