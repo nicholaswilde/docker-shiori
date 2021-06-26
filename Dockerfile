@@ -1,4 +1,4 @@
-FROM golang:1.14.15-alpine3.13 as build
+FROM golang:1.16.5-alpine3.14 as build
 ARG VERSION
 ARG CHECKSUM
 ARG FILENAME=${VERSION}.tar.gz
@@ -21,7 +21,7 @@ RUN \
   go get -d -v ./... && \
   go install -v ./...
 
-FROM ghcr.io/linuxserver/baseimage-alpine:3.13
+FROM ghcr.io/linuxserver/baseimage-alpine:3.14
 ARG BUILD_DATE
 ARG VERSION
 ENV GOPATH /go
